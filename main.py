@@ -34,6 +34,10 @@ log = logging.getLogger("resume_matcher")
 
 app = FastAPI(title="Resume Matcher API")
 
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
 # Lock this down to your actual Flutter web origin / app in production --
 # "*" is fine for local development only.
 app.add_middleware(
