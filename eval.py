@@ -1,20 +1,4 @@
-"""Evaluate the matcher against your labeled pairs and regression cases.
 
-Usage:  python eval.py dataset.json --repeats 3 --verbose
-        python eval.py regression_cases.json --repeats 1 --verbose
-
-Each case may contain:
-  human_score   your label (omit it for cases that only check behavior; they are left out of the metrics)
-  profile       {"country": "...", "location": "...", "needs_sponsorship": "yes|no|unknown"} sent like the app does
-  group         cases with the same group (same resume + JD, different profile) must all get the SAME score
-  expect        optional checks run on EVERY repeat:
-                  eligibility   "ok" | "check" | "blocked"
-                  verdict       "Apply" | "Stretch" | "Skip"
-                  min_score     number
-                  soft_contains list of substrings that must appear among the unscored soft requirements
-                  no_constraint_contains  substrings that must NOT appear in any returned constraint label
-Needs OPENAI_API_KEY (reads .env like the API does).
-"""
 import argparse
 import itertools
 import json

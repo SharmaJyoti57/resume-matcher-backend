@@ -1,20 +1,4 @@
-"""Resume Matcher API v4.
 
-Pipeline (the model never sees your profile, and the JD is analysed once per JD):
-  1. EXTRACT  (model, JD only, cached per JD): requirements + typed hard constraints + seniority note.
-     Code then verifies quotes against the JD, scopes requirements to the JD's own
-     Qualifications / Requirements sections (intro, company and perk text creates no requirements),
-     sets the tier from the section / wording, and checks every constraint's quote really supports
-     its label (a "visa" constraint needs a visa / sponsorship word in its quote, and so on).
-  2. JUDGE    (model, resume + numbered requirements): status + verbatim evidence per requirement,
-     seniority fit, and optional tips keyed by requirement number.
-  3. CODE     verifies evidence, scores, validates tips against the gap they belong to, builds feedback,
-     and judges eligibility by comparing the JD's typed constraints with the structured profile
-     (country, needs-sponsorship yes / no / unknown).
-
-Consequences: a profile change can never move the score (the model never sees it), and the same JD always
-produces the same requirement list (cached), so score differences come only from the resume.
-"""
 import hashlib
 import json
 import logging
@@ -38,11 +22,10 @@ app = FastAPI(title="Resume Matcher API")
 def health():
     return {"status": "ok"}
 
-# Lock this down to your actual Flutter web origin / app in production --
-# "*" is fine for local development only.
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://resumematcherapp.netlify.app"],
     allow_methods=["POST"],
     allow_headers=["*"],
 )
